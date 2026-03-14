@@ -95,8 +95,6 @@ return [
             'prefix' => '',
             'schema' => 'public',
             'sslmode' => 'require',
-            'options' => [
-                PDO::PGSQL_ATTR_SSL_MODE => PDO::PGSQL_ATTR_SSL_MODE_REQUIRED,
         ],
 
         'sqlsrv' => [
