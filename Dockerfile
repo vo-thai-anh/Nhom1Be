@@ -5,15 +5,14 @@ WORKDIR /var/www
 COPY . .
 
 RUN apt-get update && apt-get install -y \
-    git unzip curl \
-    && docker-php-ext-install pdo pdo_mysql
+    git unzip curl libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN composer install --no-scripts --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 RUN cp .env.example .env
-RUN php artisan key:generate
 
 EXPOSE 10000
 
