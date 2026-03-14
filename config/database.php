@@ -95,6 +95,10 @@ return [
             'prefix' => '',
             'schema' => 'public',
             'sslmode' => 'require',
+            'options' => [
+                // Thêm dòng này để ép driver PDO dùng SSL
+                1012 => 'require',
+            ],
         ],
 
         'sqlsrv' => [
