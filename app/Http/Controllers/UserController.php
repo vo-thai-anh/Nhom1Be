@@ -20,14 +20,18 @@ class UserController extends Controller
     }
 
     // POST /api/users
-    public function store(Request $request)
-    {
-        $user = Users::create([
-            'name' => $request->name
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required'
+    ]);
 
-        return response()->json($user);
-    }
+    $user = Users::create([
+        'name' => $request->name
+    ]);
+
+    return response()->json($user);
+}
 
     // DELETE /api/users/1
     public function destroy($id)
