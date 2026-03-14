@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>CRUD Users</title>
-
 </head>
 
 <body>
@@ -14,8 +13,10 @@
     <input type="text" name="name" placeholder="Nhập tên">
     <button type="submit">Thêm</button>
 </form>
+
 <br>
-<table>
+
+<table border="1">
 <tr>
     <th>ID</th>
     <th>Name</th>
@@ -26,12 +27,12 @@
 
 <tr>
     <td>{{ $user->id }}</td>
+    <td>{{ $user->name }}</td>
 
     <td>
         <form method="POST" action="/users/{{ $user->id }}">
             @csrf
             @method('DELETE')
-            <input type="text" name="name" value="{{ $user->name }}">
             <button type="submit">Delete</button>
         </form>
     </td>
