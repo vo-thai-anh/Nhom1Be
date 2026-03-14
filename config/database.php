@@ -94,7 +94,9 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
-            'sslmode' => env('DB_SSLMODE', 'prefer'),
+            'sslmode' => 'require',
+            'options' => [
+                PDO::PGSQL_ATTR_SSL_MODE => PDO::PGSQL_ATTR_SSL_MODE_REQUIRED,
         ],
 
         'sqlsrv' => [
