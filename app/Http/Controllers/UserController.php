@@ -1,28 +1,41 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Users;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function demo()
+    // GET /api/users
+    public function index()
     {
-        $users = Users::all();
-        return view('demo',compact('users'));
+        return Users::all();
     }
 
+    // GET /api/users/1
+    public function show($id)
+    {
+        return Users::find($id);
+    }
+
+    // POST /api/users
     public function store(Request $request)
     {
-        Users::create([
-            'name'=>$request->name
+        $user = Users::create([
+            'name' => $request->name
         ]);
-        return redirect('/');
+
+        return response()->json($user);
     }
 
+    // DELETE /api/users/1
     public function destroy($id)
     {
         Users::destroy($id);
-        return redirect('/');
+
+        return response()->json([
+            'message' => 'Deleted'
+        ]);
     }
 }
