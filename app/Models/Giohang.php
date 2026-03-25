@@ -15,10 +15,9 @@ class Giohang extends Model
     public $timestamps = false;
     protected $dates = ['ngay_tao'];
 
-    // Relationships
     public function nguoidung()
     {
-        return $this->belongsTo(Users::class, 'nguoi_dung_id');
+        return $this->belongsTo(nguoidung::class, 'nguoi_dung_id');
     }
 
     public function chitietgiohangs()
