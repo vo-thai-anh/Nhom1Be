@@ -1,9 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\NguoidungController;
+use App\Http\Controllers\SachController;
+use App\Http\Controllers\DonhangController;
 
-Route::get('/users',[UserController::class,'index']);
-Route::get('/users/{id}',[UserController::class,'show']);
-Route::post('/users',[UserController::class,'store']);
-Route::delete('/users/{id}',[UserController::class,'destroy']);
+Route::apiResource('nguoidung', NguoidungController::class);
+Route::apiResource('sach', SachController::class);
+Route::apiResource('donhang', DonhangController::class);
+Route::post('/login',[NguoidungController::class,'login']);
+

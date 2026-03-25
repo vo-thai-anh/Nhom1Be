@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('phieunhap', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->timestamp('ngay_nhap')->nullable();
+            $table->decimal('tong_tien',10,2)->nullable();
+            $table->string('trang_thai')->nullable();
         });
     }
 
