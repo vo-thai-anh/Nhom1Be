@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class nguoidung extends Model
+Use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class nguoidung extends Authenticatable
 {
+    use HasApiTokens;
     protected $table = 'nguoidung';
     protected $fillable = [
         'ten_dang_nhap',

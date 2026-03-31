@@ -16,7 +16,6 @@ class Chitietphieunhap extends Model
 
     public $timestamps = false;
 
-    // Relationships
     public function phieunhap()
     {
         return $this->belongsTo(Phieunhap::class, 'phieu_nhap_id');

@@ -17,7 +17,6 @@ class Chitietgiohang extends Model
 
     public $timestamps = false;
 
-    // Relationships
     public function giohang()
     {
         return $this->belongsTo(Giohang::class, 'gio_hang_id');

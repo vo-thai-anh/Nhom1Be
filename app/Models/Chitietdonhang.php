@@ -17,7 +17,6 @@ class Chitietdonhang extends Model
 
     public $timestamps = false;
 
-    // Relationships
     public function donhang()
     {
         return $this->belongsTo(Donhang::class, 'don_hang_id');

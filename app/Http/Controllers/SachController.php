@@ -8,7 +8,7 @@ class SachController extends Controller
 {
     public function index()
     {
-        return Sach::all();
+        return Sach::with('loaisach')->get();
     }
 
     public function store(Request $request)
@@ -33,4 +33,5 @@ class SachController extends Controller
     {
         return Sach::destroy($id);
     }
+    
 }
