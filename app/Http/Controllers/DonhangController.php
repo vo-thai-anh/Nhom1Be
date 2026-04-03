@@ -18,7 +18,7 @@ class DonhangController extends Controller
             'ten_nguoi_nhan'         => 'required|string|max:255',
             'sdt_nguoi_nhan'         => 'required|string|max:20',
             'dia_chi_giao_hang'      => 'required|string|max:255',
-            'phuong_thuc_thanh_toan' => 'required|in:COD,ONLINE', // Chỉ cho phép COD hoặc ONLINE
+            'phuong_thuc_thanh_toan' => 'required|in:COD,ONLINE',
             'ghi_chu'                => 'nullable|string'
         ]);
         $userId = $request->user()->id;
