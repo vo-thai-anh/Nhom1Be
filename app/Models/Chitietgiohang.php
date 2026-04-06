@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Chitietgiohang extends Model
 {
     protected $table = 'chitietgiohang';
-    public $incrementing = false;
     protected $fillable = [
         'gio_hang_id',
         'sach_id',
