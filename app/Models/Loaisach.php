@@ -11,7 +11,7 @@ class Loaisach extends Model
         'ten_loai'
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     // Relationships
     public function sachs()

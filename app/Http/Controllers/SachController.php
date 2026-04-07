@@ -15,6 +15,40 @@ class SachController extends Controller
             'data'    => $sachs
         ]);
     }
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'ten_sach'     => 'required|string|max:255',
+            'tac_gia'      => 'required|string|max:255',
+            'gia'          => 'required|numeric|min:0',
+            'so_luong'     => 'required|integer|min:0',
+            'loai_sach_id' => 'required|exists:loaisach,id',
+            'anh_bia'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'mo_ta'        => 'nullable|string',
+        ]);
+        try {
+            if ($request->hasFile('anh_bia')) {
+                $path = $request->file('anh_bia')->store('books', 'public');
+                $validatedData['anh_bia'] = asset('storage/' . $path);
+            }
+
+            $sach = Sach::create($validatedData);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Thêm sách thành công',
+                'data' => $sach
+            ], 201);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+
+        }
+    }
     public function filter(Request $request)
     {
         $query = Sach::with('loaisach');
