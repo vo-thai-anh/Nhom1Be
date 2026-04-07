@@ -45,7 +45,6 @@ class GiohangController extends Controller
     {
     $giohang = Giohang::findOrFail($id);
 
-        // BẢO MẬT: Chỉ cho phép người dùng xóa giỏ hàng của chính mình
         if ($giohang->nguoi_dung_id !== $request->user()->id) {
             return response()->json([
                 'success' => false,
