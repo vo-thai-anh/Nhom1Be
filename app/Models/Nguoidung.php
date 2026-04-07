@@ -4,7 +4,7 @@ namespace App\Models;
 
 Use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-class nguoidung extends Authenticatable
+class Nguoidung extends Authenticatable
 {
     use HasApiTokens;
     protected $table = 'nguoidung';
