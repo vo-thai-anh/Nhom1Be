@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/checkout', [DonhangController::class, 'checkout']);
 
     // chi tiết giỏ hàng
-    Route::post('/chitietgiohang/themVaoGio', [ChitietgiohangController::class, 'themVaoGio']);
+    Route::post('/chitietgiohang/them', [ChitietgiohangController::class, 'themVaoGio']);
     Route::put('/chitietgiohang/{sach_id}', [ChitietgiohangController::class, 'capNhatSoLuong']);
     Route::delete('/chitietgiohang/{sach_id}', [ChitietgiohangController::class, 'xoaChiTiet']);
 });
