@@ -82,15 +82,14 @@ class NguoidungController extends Controller
     {
         try {
             $request->validate([
-                'login'    => 'required',
+                'email'    => 'required|email',
                 'mat_khau' => 'required'
             ],[
-                'login.required' => 'Vui lòng nhập email hoặc tên đăng nhập',
+                'email.required' => 'Vui lòng nhập email',
+                'email.email' => 'Email không hợp lệ',
                 'mat_khau.required' => 'Vui lòng nhập mật khẩu'
             ]);
-            $user = Nguoidung::where('email', $request->login)
-                ->orWhere('ten_dang_nhap', $request->login)
-                ->first();
+            $user = Nguoidung::where('email', $request->email)->first();
             if (!$user) {
                 return response()->json([
                     "success" => false,
