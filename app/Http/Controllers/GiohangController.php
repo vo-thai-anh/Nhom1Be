@@ -9,7 +9,7 @@ class GiohangController extends Controller
     public function index(Request $request)
     {
         $userId = $request->user()->id;
-        $giohang = Giohang::with('chitietgiohang.sach')
+        $giohang = Giohang::with('chitietgiohangs.sach')
                         ->firstOrCreate(
                             ['nguoi_dung_id' => $userId]
                         );
@@ -40,20 +40,23 @@ class GiohangController extends Controller
             'data' => $giohang
         ], 201);
     }
-    public function destroy(Request $request, $id)
+    function update(Request $request, $id)
     {
-    $giohang = Giohang::findOrFail($id);
-
-        if ($giohang->nguoi_dung_id !== $request->user()->id) {
+        $giohang = Giohang::find($id);
+        if (!$giohang) {
             return response()->json([
                 'success' => false,
-                'message' => 'Bạn không có quyền xóa giỏ hàng này'
-            ], 403);
+                'message' => 'Giỏ hàng không tồn tại'
+            ], 404);
         }
-        $giohang->delete();
+        $validated = $request->validate([
+            'nguoi_dung_id' => 'required|exists:nguoidung,id|unique:giohang,nguoi_dung_id,' . $id
+        ]);
+        $giohang->update($validated);
         return response()->json([
             'success' => true,
-            'message' => 'Đã xóa giỏ hàng thành công'
+            'message' => 'Đã cập nhật giỏ hàng',
+            'data' => $giohang
         ]);
     }
 }

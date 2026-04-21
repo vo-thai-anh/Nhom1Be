@@ -90,4 +90,74 @@ class DonhangController extends Controller
             ], 500);
         }
     }
+    public function index(Request $request)
+    {
+        $userId = $request->user()->id;
+
+        $donhangs = Donhang::with('chitietdonhangs.sach')
+            ->where('nguoi_dung_id', $userId)
+            ->orderBy('ngay_tao', 'desc')
+            ->get();
+
+        return response()->json($donhangs);
+    }
+    public function show(Request $request, $id)
+    {
+        $userId = $request->user()->id;
+
+        $donhang = Donhang::with('chitietdonhangs.sach')
+            ->where('nguoi_dung_id', $userId)
+            ->findOrFail($id);
+
+        return response()->json($donhang);
+    }
+    public function huydon(Request $request, $id)
+    {
+        $userId = $request->user()->id;
+        $donhang = Donhang::with('chitietdonhangs')
+            ->where('nguoi_dung_id', $userId)
+            ->where('id', $id)
+            ->whereIn('trang_thai', [
+                'CHỜ_XÁC_NHẬN',
+                'ĐÃ_XÁC_NHẬN'
+            ])
+            ->first();
+        if (!$donhang) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Đơn hàng không tồn tại hoặc không thể hủy.'
+            ], 404);
+        }
+        try {
+            DB::beginTransaction();
+            foreach ($donhang->chitietdonhangs as $item) {
+                $sach = Sach::lockForUpdate()
+                    ->find($item->sach_id);
+                if ($sach) {
+                    $sach->increment(
+                        'so_luong',
+                        $item->so_luong
+                    );
+                }
+            }
+            $donhang->update([
+                'trang_thai' => 'ĐÃ_HỦY'
+            ]);
+            DB::commit();
+            return response()->json([
+                'success' => true,
+                'message' => 'Đơn hàng đã được hủy thành công.'
+            ]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Quá trình hủy đơn hàng thất bại: '
+                    . $e->getMessage()
+            ], 500);
+        }
+    }
 }
