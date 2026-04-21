@@ -100,15 +100,21 @@ class SachController extends Controller
     public function search(Request $request)
     {
         $query = Sach::with('loaisach');
-        if ($request->has('keyword') && $request->keyword != '') {
-            $query->where('ten_sach', 'LIKE', '%' . $request->keyword . '%')
-                ->orWhere('tac_gia', 'LIKE', '%' . $request->keyword . '%')
-                ->orWhere('nha_xuat_ban', 'LIKE', '%' . $request->keyword . '%');
+
+        if ($request->filled('search')) {
+
+            $keyword = strtolower($request->search);
+
+            $query->whereRaw("
+                LOWER(REPLACE(unaccent(ten_sach), ' ', ''))
+                ILIKE
+                LOWER(REPLACE(unaccent(?), ' ', ''))
+            ", ["%$keyword%"]);
         }
-        $sachs = $query->paginate(12);
+
         return response()->json([
             'success' => true,
-            'data'    => $sachs
+            'data' => $query->paginate(12)
         ]);
     }
 }

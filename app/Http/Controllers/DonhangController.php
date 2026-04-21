@@ -21,32 +21,26 @@ class DonhangController extends Controller
             'phuong_thuc_thanh_toan' => 'required|in:transfer,cod',
             'ghi_chu'                => 'nullable|string'
         ]);
-
         $userId = $request->user()->id;
 
         $giohang = Giohang::with('chitietgiohangs.sach')
             ->where('nguoi_dung_id', $userId)
             ->first();
-
         if (!$giohang || $giohang->chitietgiohangs->isEmpty()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Giỏ hàng của bạn đang trống!'
             ], 400);
         }
-
         try {
             DB::beginTransaction();
-
             $tongTien = 0;
             $tongSoLuongSach = 0;
-
             foreach ($giohang->chitietgiohangs as $item) {
                 $giaHienTai = $item->sach->gia_ban ?? $item->don_gia;
                 $tongTien += $giaHienTai * $item->so_luong;
                 $tongSoLuongSach += $item->so_luong;
             }
-
             $donhang = Donhang::create([
                 'nguoi_dung_id'          => $userId,
                 'tong_tien'              => $tongTien,

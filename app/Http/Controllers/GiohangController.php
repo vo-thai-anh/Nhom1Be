@@ -19,7 +19,6 @@ class GiohangController extends Controller
                 $tongTienThanhToan += $item->thanh_tien;
             }
         }
-
         return response()->json([
             'success' => true,
             'data' => [

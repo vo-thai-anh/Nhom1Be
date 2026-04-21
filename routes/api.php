@@ -12,6 +12,7 @@ use App\Http\Controllers\LoaisachController;
 Route::post('/login',[NguoidungController::class,'login']);
 Route::post('/register',[NguoidungController::class,'acpregister']);
 Route::get('/sach/filter', [SachController::class, 'filter']);
+Route::get('/sach/search', [SachController::class, 'search']);
 Route::get('/sach', [SachController::class, 'index']);
 Route::get('/sach/{id}', [SachController::class, 'show']);
 Route::post('/add', [SachController::class, 'store']);
