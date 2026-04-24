@@ -18,11 +18,11 @@ Route::get('/sach/{id}', [SachController::class, 'show']);
 
 Route::get('/loaisach', [LoaisachController::class, 'index']);
 Route::get('/loaisach/{id}', [LoaisachController::class, 'show']);
-
 Route::middleware('auth:sanctum')->group(function () {
     // người dùng
-    Route::get('/nguoidung', [NguoidungController::class, 'index']);
-    Route::get('/nguoidung/{id}', [NguoidungController::class, 'show']);
+    // Route::get('/nguoidung', [NguoidungController::class, 'index']);
+    Route::get('/nguoidung', [NguoidungController::class, 'show']);
+    // Route::get('/nguoidung/{id}', [NguoidungController::class, 'show']);
     Route::put('/nguoidung/{id}', [NguoidungController::class, 'update']);
 
     // giỏ hàng

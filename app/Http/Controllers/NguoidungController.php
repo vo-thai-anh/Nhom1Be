@@ -7,10 +7,23 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 class NguoidungController extends Controller
 {
-    public function show($id)
+    public function show(Request $request)
     {
-        $user = Nguoidung::findOrFail($id);
-        return response()->json($user);
+        try {
+            $user = $request->user();
+            return response()->json([
+                'success' => true,
+                'message' => 'Lấy thông tin người dùng thành công',
+                'data' => $user
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không thể lấy thông tin người dùng',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function update(Request $request, $id)
